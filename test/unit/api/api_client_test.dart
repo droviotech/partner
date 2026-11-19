@@ -16,7 +16,7 @@ void main() {
     client = ApiClient(
       config: const ApiConfig(
         baseUrl: 'https://dev.drovio.ai/api',
-        projectPrefix: '/cg/',
+        projectPrefix: '/h/',
       ),
       dio: dio,
     );
@@ -24,7 +24,7 @@ void main() {
 
   test('GET 拼接前缀并解析 Map', () async {
     adapter.onGet(
-      'https://dev.drovio.ai/api/cg/health',
+      'https://dev.drovio.ai/api/h/health',
       (server) => server.reply(200, {'ok': true}),
     );
     final result = await client.get<Map<String, dynamic>>('health');
@@ -33,7 +33,7 @@ void main() {
 
   test('POST 携带 JSON body', () async {
     adapter.onPost(
-      'https://dev.drovio.ai/api/cg/auth/login',
+      'https://dev.drovio.ai/api/h/auth/login',
       (server) => server.reply(200, {'token': 't1'}),
       data: {'username': 'u', 'password': 'p'},
     );
@@ -46,7 +46,7 @@ void main() {
 
   test('分页查询参数与 PageResult 解码', () async {
     adapter.onGet(
-      'https://dev.drovio.ai/api/cg/inventory?page=2&page_size=20',
+      'https://dev.drovio.ai/api/h/inventory?page=2&page_size=20',
       (server) => server.reply(200, {
         'items': [
           {'id': 1},

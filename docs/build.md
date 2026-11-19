@@ -26,7 +26,7 @@ CI 上由 workflow 从 Actions secrets 恢复签名材料，密钥不写入仓�
 1. 在仓库 Settings → Secrets and variables → Actions 配置 4 个 secret：
    - `ANDROID_KEYSTORE_BASE64`：`base64 -i android/platform.jks | tr -d '\n' | pbcopy`（不要带换行）
    - `ANDROID_KEYSTORE_PASSWORD`：keystore 密码
-   - `ANDROID_KEY_ALIAS`：`warehouse`
+   - `ANDROID_KEY_ALIAS`：`partner`
    - `ANDROID_KEY_PASSWORD`：key 密码
 2. CI 步骤将 base64 解码为 `android/platform.jks`，并从 secrets 生成 `android/keystore.properties`。
 3. 未配置 secret 时该步骤跳过，构建使用 debug 证书回退（仅用于验证，不可用于正式分发）。
@@ -63,7 +63,7 @@ CI 上由 workflow 从 Actions secrets 恢复签名材料，密钥不写入仓�
 ## 分发
 
 - 仓管端/运维端：普通安装包分发。
-- 合作方端：应用商店（本项目为仓管端，仅参考）。
+- 合作方端：应用商店（本项目为合作方端，仅参考）。
 
 ## 真机验收清单
 

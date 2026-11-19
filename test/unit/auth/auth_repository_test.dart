@@ -20,7 +20,7 @@ void main() {
     final client = ApiClient(
       config: const ApiConfig(
         baseUrl: 'https://dev.drovio.ai/api',
-        projectPrefix: '/cg/',
+        projectPrefix: '/h/',
       ),
       dio: dio,
     );
@@ -32,12 +32,12 @@ void main() {
 
   test('登录成功保存 token 并返回 profile', () async {
     adapter.onPost(
-      'https://dev.drovio.ai/api/cg/auth/login',
+      'https://dev.drovio.ai/api/h/auth/login',
       data: Matchers.any,
       (server) => server.reply(200, {'token': 't1', 'operator_id': 'op-1'}),
     );
     adapter.onGet(
-      'https://dev.drovio.ai/api/cg/auth/me',
+      'https://dev.drovio.ai/api/h/auth/me',
       (server) => server.reply(200, {
         'id': 'op-1',
         'name': '张三',

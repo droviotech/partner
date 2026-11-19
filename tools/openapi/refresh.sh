@@ -2,7 +2,7 @@
 set -euo pipefail
 
 OPENAPI_URL="${OPENAPI_URL:-https://dev.drovio.ai/api/docs/openapi.yaml}"
-PREFIX="${PREFIX:-cg}"
+PREFIX="${PREFIX:-h}"
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 SNAPSHOT="$ROOT/tools/openapi/openapi.yaml"
 FILTERED="$ROOT/lib/contracts/swagger/openapi.yaml"

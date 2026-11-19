@@ -55,7 +55,7 @@ class AppLocalizationsZhHans extends AppLocalizationsZh {
   AppLocalizationsZhHans() : super('zh_Hans');
 
   @override
-  String get appTitle => '仓库';
+  String get appTitle => '合作方端';
 
   @override
   String get home => '首页';

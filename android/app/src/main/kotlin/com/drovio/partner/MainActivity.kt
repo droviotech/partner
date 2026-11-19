@@ -1,4 +1,4 @@
-package com.drovio.warehouse
+package com.drovio.partner
 
 import io.flutter.embedding.android.FlutterActivity
 

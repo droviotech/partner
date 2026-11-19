@@ -23,4 +23,4 @@ class AppDatabase extends _$AppDatabase {
   );
 }
 
-AppDatabase buildAppDatabase() => AppDatabase(driftDatabase(name: 'warehouse'));
+AppDatabase buildAppDatabase() => AppDatabase(driftDatabase(name: 'partner'));

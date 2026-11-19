@@ -38,7 +38,7 @@ void main() {
     dio = createDio(
       config: const ApiConfig(
         baseUrl: 'https://dev.drovio.ai/api',
-        projectPrefix: '/cg/',
+        projectPrefix: '/h/',
       ),
       tokenProvider: tokenProvider,
       sessionEvents: sessionEvents,
@@ -48,14 +48,14 @@ void main() {
     client = ApiClient(
       config: const ApiConfig(
         baseUrl: 'https://dev.drovio.ai/api',
-        projectPrefix: '/cg/',
+        projectPrefix: '/h/',
       ),
       dio: dio,
     );
   });
 
   test('请求携带 Bearer token 与 Accept-Language', () async {
-    adapter.onGet('https://dev.drovio.ai/api/cg/health', (server) {
+    adapter.onGet('https://dev.drovio.ai/api/h/health', (server) {
       server.replyCallback(200, (options) {
         expect(options.headers['Authorization'], 'Bearer tok-123');
         expect(options.headers['Accept-Language'], 'th');
@@ -66,7 +66,7 @@ void main() {
   });
 
   test('请求携带 X-Request-ID', () async {
-    adapter.onGet('https://dev.drovio.ai/api/cg/health', (server) {
+    adapter.onGet('https://dev.drovio.ai/api/h/health', (server) {
       server.replyCallback(200, (options) {
         final requestId = options.headers['X-Request-ID'];
         expect(requestId, isNotNull);
@@ -82,7 +82,7 @@ void main() {
     sessionEvents.expired.listen((_) => expired = true);
 
     adapter.onGet(
-      'https://dev.drovio.ai/api/cg/health',
+      'https://dev.drovio.ai/api/h/health',
       (server) => server.reply(401, {'code': 'UNAUTHORIZED', 'message': '未登录'}),
     );
 
@@ -101,7 +101,7 @@ void main() {
 
   test('业务错误体映射 code/message/details', () async {
     adapter.onGet(
-      'https://dev.drovio.ai/api/cg/health',
+      'https://dev.drovio.ai/api/h/health',
       (server) => server.reply(422, {
         'code': 'VALIDATION_ERROR',
         'message': '参数错误',
@@ -121,12 +121,12 @@ void main() {
 
   test('网络错误映射 network', () async {
     adapter.onGet(
-      'https://dev.drovio.ai/api/cg/health',
+      'https://dev.drovio.ai/api/h/health',
       (server) => server.throws(
         404,
         DioException(
           requestOptions: RequestOptions(
-            path: 'https://dev.drovio.ai/api/cg/health',
+            path: 'https://dev.drovio.ai/api/h/health',
           ),
           type: DioExceptionType.connectionError,
         ),
