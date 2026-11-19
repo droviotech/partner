@@ -53,7 +53,7 @@ flutter test integration_test/app_launch_test.dart -d <device>
 - 描述用中文，结尾不加句号；提交信息不得出现 AI 署名或工具标识（无 `Co-Authored-By`、`Generated with` 类字样）
 - 一个小功能完整跑通（格式、analyze、测试、构建通过）再提交；不提交半成品；不相关改动分开提交
 - `local.properties`、`.env.local`、签名文件、APK、构建缓存不入库，`.gitignore` 已覆盖
-- 远端为 SSH（`git@github.com:droviotech/warehouse.git`），普通推送 `master`；基础架构、CI、签名、文档有变更时同步更新 `docs/` 与本文件
+- 远端为 SSH（`git@github.com:droviotech/partner.git`），普通推送 `master`；基础架构、CI、签名、文档有变更时同步更新 `docs/` 与本文件
 
 ## 文档索引
 
