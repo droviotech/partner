@@ -4,7 +4,7 @@ Drovio 合作方端 Flutter App（Android + iOS）。合作方端使用独立账
 
 ## 定位
 
-- 仓库策略：一项目一仓库；不做内部包管理、不设模板仓库。本仓库由仓管端（warehouse）基础架构复制而来，后期并入 Flock 聚合工作区统一维护基础内容
+- 仓库策略：一项目一仓库；不做内部包管理、不设模板仓库。本仓库由仓管端（warehouse）基础架构复制而来，现已并入 Flock 聚合工作区统一维护基础内容
 - `core/` 是复制到其他项目时基本不变的基础能力；项目接口、DTO、Repository 放 `contracts/`，不属于 `core`
 - 依赖方向：`app → features → contracts → core/api`；`core` 不得依赖 `contracts` / `features`，不得出现“入库”“工单”“分润”等业务概念
 - 接口统一来自同一份 OpenAPI（`https://dev.drovio.ai/api/docs/openapi.yaml`），本仓库按前缀 `/h/` 过滤生成，请求路径为 `baseUrl + projectPrefix + endpointPath`
