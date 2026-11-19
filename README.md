@@ -8,9 +8,9 @@ Drovio 合作方端 App（Android + iOS），基于 Flutter 开发。合作方�
 
 | App | 使用方 | API 前缀 | 主要能力 | 离线策略 |
 | --- | --- | --- | --- | --- |
-| 仓管端 | 内部仓管 | `/cg/` | 入库、出库、库存、盘点、报废、扫码 | 强离线 |
-| 运维端 | 内部运维 | `/y/` | 工单、设备操作、安装检测、巡检 | 弱离线 |
-| 合作方端（本项目） | 外部合作方 | `/h/` | 经营、分润、提现、支付、IC 卡 | 在线为主 |
+| 仓管端 | 内部仓管 | `/wh/` | 入库、出库、库存、盘点、报废、扫码 | 强离线 |
+| 运维端 | 内部运维 | `/ops/` | 工单、设备操作、安装检测、巡检 | 弱离线 |
+| 合作方端（本项目） | 外部合作方 | `/partner/` | 经营、分润、提现、支付、IC 卡 | 在线为主 |
 
 仓库策略：一项目一仓库，不做内部包管理、不设模板仓库；本项目从仓管端（warehouse）复制基础架构后继续开发，现已并入 Flock 聚合工作区统一维护。
 
@@ -100,7 +100,7 @@ flutter test integration_test/app_launch_test.dart -d <device>   # 集成测试
 
 ## 接口契约与代码生成
 
-所有接口来自同一份 OpenAPI：`https://dev.drovio.ai/api/docs/openapi.yaml`。请求路径为 `baseUrl + projectPrefix + endpointPath`，本仓库前缀 `/h/`（合作方），后期按服务端实际路由调整时只改 `ApiConfig`。
+所有接口来自同一份 OpenAPI：`https://dev.drovio.ai/api/docs/openapi.yaml`。请求路径为 `baseUrl + projectPrefix + endpointPath`，本仓库前缀 `/partner/`（合作方），前缀以 egret `docs/development-plan.md` 为准，调整时只改 `ApiConfig`。
 
 ```bash
 bash tools/openapi/refresh.sh    # 拉取最新规范，按前缀过滤并生成模型

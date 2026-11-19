@@ -36,7 +36,7 @@
 | core 边界 | 只放通用能力，不依赖项目接口、模型、业务 |
 | 项目接口 | 放在各项目 `contracts/`，不属于 `core` |
 | API 契约来源 | 统一 OpenAPI，`baseUrl + projectPrefix` 按项目配置 |
-| 项目前缀 | 仓管 `/cg/`、运维 `/y/`、合作端 `/h/`，后期可调整 |
+| 项目前缀 | 仓管 `/wh/`、运维 `/ops/`、合作端 `/partner/`，以 egret `docs/development-plan.md` 为准 |
 | 认证体系 | 仓管/运维/Web 后台共用员工账号体系，按角色区分；合作方独立 |
 | 首个项目 | 仓管端，先覆盖强离线与扫码最高风险 |
 | 离线分级 | 仓管强离线、运维弱离线、合作方在线为主 |
@@ -213,20 +213,20 @@ baseUrl + projectPrefix + endpointPath
 示例：
 
 ```text
-仓管   https://dev.drovio.ai/api/cg/...
-运维   https://dev.drovio.ai/api/y/...
-合作方 https://dev.drovio.ai/api/h/...
+仓管   https://dev.drovio.ai/api/wh/...
+运维   https://dev.drovio.ai/api/ops/...
+合作方 https://dev.drovio.ai/api/partner/...
 ```
 
 三个项目的 `projectPrefix`：
 
 ```text
-仓管   /cg/
-运维   /y/
-合作方 /h/
+仓管   /wh/
+运维   /ops/
+合作方 /partner/
 ```
 
-前缀为暂定值，后期按服务端实际路由调整；调整时只改 `ApiConfig`，不改请求层。
+前缀以 egret `docs/development-plan.md` 预留的分组为准；调整时只改 `ApiConfig`，不改请求层。
 
 如果 OpenAPI 路径本身已带前缀，`projectPrefix` 可留空；具体以服务端规范为准。
 
@@ -237,8 +237,8 @@ baseUrl + projectPrefix + endpointPath
 - 登录、Profile 接口属于 `contracts`。
 - 仓管端、运维端与 Web 管理后台使用同一套员工账号体系，通过角色和平台区分权限。
 - 认证封装参考 Web 管理后台的 `/admin/auth/*` 结构：登录、注销、修改密码、当前账号 Profile。
-- 仓管与运维认证接口暂定为 `/cg/auth/*`、`/y/auth/*`，具体路径以后端 OpenAPI 为准。
-- 合作方端来自 W38 对应的合作方用户体系，与员工账号体系独立；合作方认证接口暂定为 `/h/auth/*`。
+- 仓管与运维认证接口按 `/wh/auth/*`、`/ops/auth/*` 预留，具体路径以后端 OpenAPI 为准。
+- 合作方端来自 W38 对应的合作方用户体系，与员工账号体系独立；合作方认证接口按 `/partner/auth/*` 预留。
 - Token 按当前 Web 管理后台现状处理：无过期、无刷新机制；会话失效以服务端返回为准。
 - `AuthTokenProvider` 仍保留刷新扩展点，后续后端增加刷新机制时无需改业务代码。
 
@@ -402,9 +402,9 @@ lib/contracts/generated/
 三个项目从同一 URL 拉取同一份规范；接口更新时分别重新生成并同步提交。生成范围按项目前缀过滤：
 
 ```text
-仓管   refresh.sh /cg/  → 仅生成 /cg/ 路径及其引用的 Schema
-运维   refresh.sh /y/   → 仅生成 /y/ 路径及其引用的 Schema
-合作方 refresh.sh /h/   → 仅生成 /h/ 路径及其引用的 Schema
+仓管   refresh.sh /wh/       → 仅生成 /wh/ 路径及其引用的 Schema
+运维   refresh.sh /ops/      → 仅生成 /ops/ 路径及其引用的 Schema
+合作方 refresh.sh /partner/  → 仅生成 /partner/ 路径及其引用的 Schema
 ```
 
 过滤时保留共享 Schema，避免引用缺失。
@@ -474,7 +474,7 @@ features/inbound/
 
 - [x] 确认框架层待讨论项（P0）。
 - [x] 冻结框架层架构决策（ADR 记录待补充）。
-- [x] 确认 OpenAPI 前缀（/cg/、/y/、/h/ 暂定）与按前缀生成。
+- [x] 按 egret `docs/development-plan.md` 确认 OpenAPI 前缀（/wh/、/ops/、/partner/）与按前缀生成。
 
 ### 阶段 1：工程骨架
 
@@ -535,8 +535,8 @@ features/inbound/
    - 依赖注入已确定为 get_it + injectable。
 
 2. **项目前缀与 OpenAPI 契约**
-   - 前缀已暂定为 `/cg/`、`/y/`、`/h/`，后期按服务端实际路由调整。
-   - 登录、Profile 使用各自前缀，暂定 `/cg/auth/*`、`/y/auth/*`、`/h/auth/*`。
+   - 前缀按 egret `docs/development-plan.md` 预留给 `/wh/`、`/ops/`、`/partner/`。
+   - 登录、Profile 使用各自前缀，按 `/wh/auth/*`、`/ops/auth/*`、`/partner/auth/*` 预留。
    - 当前 OpenAPI 尚无仓管入库/出库/盘点等接口，由谁、何时补充？
 
 3. **认证与安全**

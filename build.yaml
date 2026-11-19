@@ -10,6 +10,6 @@ targets:
           # 只扫描过滤后的生成输入目录，避免同时处理原始全量快照
           input_folder: "lib/contracts/swagger"
           output_folder: "lib/contracts/generated"
-          include_paths: ["cg"]
+          include_paths: ["partner"]
           build_only_models: true
           separate_models: true

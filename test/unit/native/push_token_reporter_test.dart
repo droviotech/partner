@@ -28,7 +28,7 @@ void main() {
     final dio = Dio(BaseOptions());
     final adapter = DioAdapter(dio: dio);
     adapter.onPost(
-      'https://dev.drovio.ai/api/h/devices/push-token',
+      'https://dev.drovio.ai/api/partner/devices/push-token',
       data: Matchers.any,
       (server) {
         server.replyCallback(200, (options) {
@@ -40,7 +40,7 @@ void main() {
     final client = ApiClient(
       config: const ApiConfig(
         baseUrl: 'https://dev.drovio.ai/api',
-        projectPrefix: '/h/',
+        projectPrefix: '/partner/',
       ),
       dio: dio,
     );
@@ -56,7 +56,7 @@ void main() {
     final client = ApiClient(
       config: const ApiConfig(
         baseUrl: 'https://dev.drovio.ai/api',
-        projectPrefix: '/h/',
+        projectPrefix: '/partner/',
       ),
       dio: dio,
     );

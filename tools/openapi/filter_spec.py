@@ -35,7 +35,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
     parser.add_argument("output")
-    parser.add_argument("--prefix", default="/h/", help="保留的路径前缀，如 /h/")
+    parser.add_argument("--prefix", default="/partner/", help="保留的路径前缀，如 /partner/")
     args = parser.parse_args(argv)
 
     with open(args.input, encoding="utf-8") as f:
@@ -58,8 +58,8 @@ def main(argv=None):
 
     schemas = spec.get("components", {}).get("schemas", {}) or {}
     if not paths:
-        # 过渡策略：当前快照没有 /h/ 路径时保留全部 Schema，
-        # 保证生成器输出可用；后端补充 /h/ 后自动切换为引用过滤。
+        # 过渡策略：当前快照没有 /partner/ 路径时保留全部 Schema，
+        # 保证生成器输出可用；后端补充 /partner/ 后自动切换为引用过滤。
         keep = set(schemas.keys())
         print("WARNING: no paths match prefix, keeping all schemas", file=sys.stderr)
     else:

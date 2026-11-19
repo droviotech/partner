@@ -13,19 +13,21 @@ void main() {
 
     final dio = Dio(BaseOptions());
     final adapter = DioAdapter(dio: dio);
-    adapter.onPut('https://dev.drovio.ai/api/h/files', data: Matchers.any, (
-      server,
-    ) {
-      server.replyCallback(200, (options) {
-        expect(options.headers['Content-Range'], startsWith('bytes '));
-        expect(options.headers['X-Content-SHA256'], 'sha256-abc');
-        return {'done': true};
-      });
-    });
+    adapter.onPut(
+      'https://dev.drovio.ai/api/partner/files',
+      data: Matchers.any,
+      (server) {
+        server.replyCallback(200, (options) {
+          expect(options.headers['Content-Range'], startsWith('bytes '));
+          expect(options.headers['X-Content-SHA256'], 'sha256-abc');
+          return {'done': true};
+        });
+      },
+    );
 
     final client = UploadClient(dio: dio);
     final task = await client.uploadChunked(
-      url: 'https://dev.drovio.ai/api/h/files',
+      url: 'https://dev.drovio.ai/api/partner/files',
       filePath: file.path,
       chunkSizeBytes: 2048,
       sha256: 'sha256-abc',
@@ -45,7 +47,7 @@ void main() {
     final dio = Dio(BaseOptions());
     final adapter = DioAdapter(dio: dio);
     adapter.onPost(
-      'https://dev.drovio.ai/api/h/files/photo',
+      'https://dev.drovio.ai/api/partner/files/photo',
       data: Matchers.any,
       (server) => server.reply(200, {'ok': true}),
     );
@@ -53,7 +55,7 @@ void main() {
     final client = UploadClient(dio: dio);
     var lastProgress = -1.0;
     await client.uploadMultipart(
-      url: 'https://dev.drovio.ai/api/h/files/photo',
+      url: 'https://dev.drovio.ai/api/partner/files/photo',
       filePath: file.path,
       fieldName: 'file',
       onProgress: (p) => lastProgress = p,
