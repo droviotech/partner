@@ -15,7 +15,7 @@
 ## 签名
 
 - 签名材料只在本机，不入库；`android/keystore.properties.example` 复制为 `android/keystore.properties`。
-- 证书为 `android/platform.jks`（keytool 生成，别名 `warehouse`），debug 与 release 使用同一证书。
+- 证书为 `android/platform.jks`（keytool 生成，别名 `partner`），debug 与 release 使用同一证书。
 - 存在签名材料时 debug/release 均使用该证书；无签名材料时回退 debug 证书（CI 可离线构建，安装包仅用于验证）。
 - iOS 签名材料（证书、描述文件）在 Mac 本地管理，不入库。
 

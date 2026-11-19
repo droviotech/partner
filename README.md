@@ -93,7 +93,7 @@ flutter test integration_test/app_launch_test.dart -d <device>   # 集成测试
 
 ### 签名
 
-- 证书：`android/platform.jks`（keytool 生成，别名 `warehouse`），debug 与 release 使用同一证书
+- 证书：`android/platform.jks`（keytool 生成，别名 `partner`），debug 与 release 使用同一证书
 - 本地配置：`android/keystore.properties`（含 storeFile / storePassword / keyAlias / keyPassword），与 `platform.jks` 均不入库
 - CI：从 Actions secrets（`ANDROID_KEYSTORE_BASE64`、`ANDROID_KEYSTORE_PASSWORD`、`ANDROID_KEY_ALIAS`、`ANDROID_KEY_PASSWORD`）恢复签名材料；未配置时回退 debug 证书
 - iOS 签名材料（证书、描述文件）在 Mac 本地管理，不入库
