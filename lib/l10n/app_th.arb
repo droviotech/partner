@@ -1,0 +1,16 @@
+{
+  "@@locale": "th",
+  "appTitle": "แอปพาร์ทเนอร์",
+  "home": "หน้าแรก",
+  "scan": "สแกน",
+  "messages": "ข้อความ",
+  "settings": "ตั้งค่า",
+  "login": "เข้าสู่ระบบ",
+  "logout": "ออกจากระบบ",
+  "username": "ชื่อผู้ใช้",
+  "password": "รหัสผ่าน",
+  "loginError": "เข้าสู่ระบบไม่สำเร็จ",
+  "sessionExpired": "เซสชันหมดอายุ",
+  "messageDetail": "รายละเอียดข้อความ",
+  "messagePlaceholder": "ข้อความ {id}"
+}

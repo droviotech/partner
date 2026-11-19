@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      injectable_generator:injectable:
+        options:
+          auto_register: true
+          class_name_pattern: 'Repository|Service|Bloc|Cubit|Gateway|Client|Controller|Store|Provider|Api|Dao|Theme'
+      swagger_dart_code_generator:
+        options:
+          # 只扫描过滤后的生成输入目录，避免同时处理原始全量快照
+          input_folder: "lib/contracts/swagger"
+          output_folder: "lib/contracts/generated"
+          include_paths: ["cg"]
+          build_only_models: true
+          separate_models: true

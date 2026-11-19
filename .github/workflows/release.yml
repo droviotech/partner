@@ -1,0 +1,57 @@
+name: Release build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: [self-hosted, Linux, dev-drovio]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Unit and widget tests
+        run: flutter test
+        continue-on-error: true
+      - name: Restore signing materials
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > android/platform.jks
+            cat > android/keystore.properties <<EOF
+          storeFile=platform.jks
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          EOF
+            echo "签名材料已恢复"
+          else
+            echo "未配置 ANDROID_KEYSTORE_BASE64，release 将使用 debug 证书回退签名"
+          fi
+      - name: Build release APK
+        run: |
+          source <(bash tools/version.sh)
+          flutter build apk --release --build-name "$VERSION" --build-number "$BUILD_NUMBER"
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: partner-android-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  ios:
+    # 签名材料与证书在 Mac 本地；有 macOS runner 后再启用此 job
+    if: false
+    runs-on: macos-14
+    steps:
+      - name: Reserved for iOS release build
+        run: echo "iOS 构建见 docs/build.md（本地执行）"

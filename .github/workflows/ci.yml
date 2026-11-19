@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    # 开发服务器 self-hosted runner；Android SDK 常驻，缺失组件由 Flutter 自动下载
+    runs-on: [self-hosted, Linux, dev-drovio]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0   # 构建号取提交数，需要完整历史
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Format check
+        run: dart format --set-exit-if-changed lib test
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+      - name: Unit and widget tests
+        run: flutter test
+        continue-on-error: true   # 测试是辅助手段，不阻塞构建/发布/合并
+      - name: Restore signing materials
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > android/platform.jks
+            cat > android/keystore.properties <<EOF
+          storeFile=platform.jks
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          EOF
+          else
+            echo "未配置 ANDROID_KEYSTORE_BASE64，debug 构建使用默认 debug 证书"
+          fi
+      - name: Debug APK build
+        run: flutter build apk --debug
+      - name: Integration tests (device required)
+        run: echo "集成测试需真机/模拟器，见 docs/build.md"

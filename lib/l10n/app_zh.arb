@@ -1,0 +1,16 @@
+{
+  "@@locale": "zh",
+  "appTitle": "合作方端",
+  "home": "首页",
+  "scan": "扫码",
+  "messages": "消息",
+  "settings": "设置",
+  "login": "登录",
+  "logout": "退出登录",
+  "username": "用户名",
+  "password": "密码",
+  "loginError": "登录失败",
+  "sessionExpired": "会话已失效",
+  "messageDetail": "消息详情",
+  "messagePlaceholder": "消息 {id}"
+}
